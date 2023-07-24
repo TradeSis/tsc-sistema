@@ -28,7 +28,7 @@ if(isset($_POST['token'])){
         $_SESSION['idUsuario'] = $idUsuario;
         $_SESSION['idCliente'] = $idCliente;
         $_SESSION['email'] = $email;
-        header('Location: '. URLROOT . '/sistema/');
+        header('Location: '. URLROOT . '/sistema/painel.php');
     }
     else {
         $mensagem = "Token inválido ou expirado!";
