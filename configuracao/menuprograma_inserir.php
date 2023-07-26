@@ -80,11 +80,11 @@ $aplicativos = buscaAplicativos();
                         </select>
                     </div>
                 </div>
+                <div style="text-align:right; margin-top:30px">
+        
+                    <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+                </div>
             </form>
-        </div>
-        <div style="text-align:right; margin-top:30px">
-
-            <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
         </div>
     </div>
     </div>
