@@ -44,7 +44,7 @@ $aplicativos = buscaAplicativosMenu($_SESSION['idUsuario']);
                 <div class="modal-body">Selecione "Logout" abaixo se você deseja encerrar sua sessão.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/painel/logout.php">Logout</a>
+                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/sistema/logout.php">Logout</a>
                 </div>
             </div>
         </div>
