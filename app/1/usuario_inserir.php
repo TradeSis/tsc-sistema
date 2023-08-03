@@ -15,10 +15,10 @@ if (isset($jsonEntrada['nomeUsuario'])) {
 
     $statusUsuario = 0;
 
-    $sql = "INSERT INTO `usuario`( `nomeUsuario`, `idCliente`, `email`, `cpfCnpj`, `telefone`, `password`, `statusUsuario`) VALUES ('$nomeUsuario', $idCliente, '$email', '$cpfCnpj', '$telefone', '$password', $statusUsuario)";
+    $sql = "INSERT INTO `usuario` ( `nomeUsuario`, `idCliente`, `email`, `cpfCnpj`, `telefone`, `password`, `statusUsuario`, `secret`) VALUES ('$nomeUsuario', $idCliente, '$email', '$cpfCnpj', '$telefone', '$password', $statusUsuario, '')";
     
     if ($idCliente=="") { // sem id , tira do insert para deixar NULL
-        $sql = "INSERT INTO `usuario`( `nomeUsuario`, `email`, `cpfCnpj`, `telefone`, `password`, `statusUsuario`) VALUES ('$nomeUsuario', '$email', '$cpfCnpj', '$telefone', '$password', $statusUsuario)";
+        $sql = "INSERT INTO `usuario`( `nomeUsuario`, `email`, `cpfCnpj`, `telefone`, `password`, `statusUsuario`, `secret`) VALUES ('$nomeUsuario', '$email', '$cpfCnpj', '$telefone', '$password', $statusUsuario, '')";
     };
 
 
