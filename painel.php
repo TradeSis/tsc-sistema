@@ -24,7 +24,7 @@ $aplicativos = buscaAplicativosMenu($_SESSION['idUsuario']);
                     </a>
                     
                 <div class="dropdown-menu" aria-labelledby="userDropdown" style="margin-left:-60px;">
-                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>" src=""><i class="bi bi-person-circle"></i>&#32;<samp>Perfil</samp></a>
+                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/configuracao/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>" src=""><i class="bi bi-person-circle"></i>&#32;<samp>Perfil</samp></a>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
                 </div>
             </li>
@@ -44,7 +44,7 @@ $aplicativos = buscaAplicativosMenu($_SESSION['idUsuario']);
                 <div class="modal-body">Selecione "Logout" abaixo se você deseja encerrar sua sessão.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/painel/logout.php">Logout</a>
+                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/sistema/logout.php">Logout</a>
                 </div>
             </div>
         </div>
