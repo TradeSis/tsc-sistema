@@ -1,36 +1,151 @@
 <?php
-//Lucas 05042023 - adicionado foreach para menuLateral.
-//gabriel 220323 11:19 - adicionado IF para usuario cliente
-//Lucas 13032023 - criado versão 2 do menu.
 
 include_once 'head.php';
-include_once 'database/aplicativo.php';
-$aplicativos = buscaAplicativosMenu($_SESSION['idUsuario']);
+include_once ROOT . "/sistema/database/aplicativo.php";
+$aplicativos = buscaAplicativosMenu($_SESSION['idLogin']);
+
+
+$aplicativo = array();
+if (isset($aplicativos['nomeAplicativo'])) {
+    $aplicativo[] = $aplicativos["nomeAplicativo"];
+} else {
+    foreach ($aplicativos as $unico) {
+        //echo '<hr> aplicativos -> ' . json_encode($unico);
+        $aplicativo[] = $unico["nomeAplicativo"];
+    }
+}
+$URL_ATUAL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$url = (parse_url($URL_ATUAL, PHP_URL_PATH));
+//echo json_encode(URLROOT);
 ?>
 
-<link rel="stylesheet" href="css/painel.css">
+<style>
+    .navbar-nav .nav-link-menu.active {
+        color: #fff;
+        font-weight: 700;
+        border-bottom: 2px solid #fff;
+        background-color: transparent;
+    }
+
+    .navbar-nav .nav-link-menu:hover {
+        color: #fff;
+    }
+</style>
+
 <body>
 
+    <nav class="Menu navbar navbar-expand topbar static-top shadow ">
 
-<nav class="navbar Menu pt-2 pb-2">
-  <a class="navbar-brand"></a>
-        
-        <ul class="navbar-nav" style="margin-right:110px; margin-bottom: 50px">
-            <li class="nav-item dropdown font-weight-bold" style="color:white; position: fixed;">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:white;">
-                        <span>
-                                <?php echo $logado ?>
+        <a class="navbar-brand" href="<?php echo URLROOT ?>/sistema"><img src="../img/white.png" width="150"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 120px">
+            <ul class="navbar-nav mx-auto">
+
+
+                <?php
+                if (in_array("Crediario", $aplicativo)) { ?>
+                    <li class="nav-item mr-4"><a href="<?php echo URLROOT ?>/crediario/ " class="nav-link nav-link-menu 
+                        <?php if ($url == URLROOT . "/crediario/") {
+                            echo " active ";
+                        } ?>">
+                            Crediario</a>
+                    </li>
+                <?php }
+
+                if (in_array("Vendas", $aplicativo)) { ?>
+                    <li class="nav-item mr-4"><a href="<?php echo URLROOT ?>/vendas/" class="nav-link nav-link-menu 
+                        <?php if ($url == URLROOT . "/vendas/") {
+                            echo " active ";
+                        } ?>">
+                            Vendas</a>
+                    </li>
+                <?php }
+             
+                if (in_array("Relatorios", $aplicativo)) { ?>
+                    <li class="nav-item mr-4"><a href="<?php echo URLROOT ?>/relatorios/ " class="nav-link nav-link-menu 
+                        <?php if ($url == URLROOT . "/relatorios/") {
+                            echo " active ";
+                        } ?>">
+                            Relatorios</a>
+                    </li>
+
+                <?php } if ($_SESSION["idEmpresa"] == 1 && in_array("Sistema", $aplicativo)) { ?>
+                    <li class="nav-item mr-4"><a href="<?php echo URLROOT ?>/sistema/" class="nav-link nav-link-menu 
+                        <?php if ($url == URLROOT . "/sistema/") {
+                            echo " active ";
+                        } ?>">
+                            Sistema</a>
+                    </li>
+                <?php }  ?>
+
+
+            </ul>
+
+            <ul class="navbar-nav ">
+
+                <!-- Email -->
+                <li class="nav-item dropdown no-arrow mx-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-envelope-exclamation-fill"></i>
+
+                        <span class="badge badge-danger badge-counter"></span>
+                    </a>
+
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        aria-labelledby="messagesDropdown">
+                        <h6 class="dropdown-header">
+                            Emails Recebidos
+                        </h6>
+
+                        <a class="dropdown-item text-center small text-gray-500" href="#">Ver todas as mensagens</a>
+                    </div>
+                </li>
+
+                <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <!-- <img class="img-profile rounded-circle" src="../imgs/undraw_profile.svg"> -->
+                        <!--  <i class="bi bi-person-circle"></i>&#32; -->
+                        <span class="fs-1 text">
+                            <?php echo $logado ?>
                         </span>
                     </a>
-                    
-                <div class="dropdown-menu" aria-labelledby="userDropdown" style="margin-left:-60px;">
-                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/configuracao/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>" src=""><i class="bi bi-person-circle"></i>&#32;<samp>Perfil</samp></a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-                </div>
-            </li>
-    
-        </ul>
-</nav>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        aria-labelledby="userDropdown">
+                        <a class="dropdown-item"
+                            href="<?php echo URLROOT ?>/sistema/configuracao/loginPerfil_alterar.php?idLogin=<?php echo $_SESSION['idLogin'] ?>">
+                            <i class="bi bi-person-circle"></i>&#32;
+                            Perfil
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="bi bi-box-arrow-right"></i>&#32;
+                            Logout
+                        </a>
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </nav>
+
+
+
+
+
     <!-- Modal sair -->
     <div class="modal fade" id="logoutModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -52,37 +167,95 @@ $aplicativos = buscaAplicativosMenu($_SESSION['idUsuario']);
 
 
 
-<div class="container-fluid mt-3">
+    <script type="text/javascript" src="menu.js"></script>
+    <script>
+        var tab;
+        var tabContent;
 
-    <h1 class="heading"><a href="#"><img src="../img/brand/logo.png" width="300"></a></h1>
+        window.onload = function () {
+            tabContent = document.getElementsByClassName('tabContent');
+            tab = document.getElementsByClassName('tab');
+            hideTabsContent(1);
+        }
 
-    <div class="box-container mt-3">
-        <?php
-        if (isset($aplicativos['idAplicativo'])) { ?>
-            <div class="box">
-                <img src="image/icon-1.png" alt="">
-                <h3><?php echo $aplicativos['nomeAplicativo'] ?></h3>
-                
-                <a href="<?php echo $aplicativos['appLink'] ?>" class="btn">acessar</a>
-            </div>
-        <?php } else {
-        foreach ($aplicativos as $aplicativo) {
-        ?>
-        <div class="box">
-            <img src="image/icon-1.png" alt="">
-            <h3><?php echo $aplicativo['nomeAplicativo'] ?></h3>
-            
-            <a href="<?php echo $aplicativo['appLink'] ?>" class="btn">acessar</a>
-        </div>
-        <?php }} ?>
+        document.getElementById('tabs').onclick = function (event) {
+            var target = event.target;
+            if (target.className == 'tab') {
+                for (var i = 0; i < tab.length; i++) {
+                    if (target == tab[i]) {
+                        showTabsContent(i);
+                        break;
+                    }
+                }
+            }
+        }
 
-    </div>
+        function hideTabsContent(a) {
+            for (var i = a; i < tabContent.length; i++) {
+                tabContent[i].classList.remove('show');
+                tabContent[i].classList.add("hide");
+                tab[i].classList.remove('whiteborder');
+            }
+        }
+
+        function showTabsContent(b) {
+            if (tabContent[b].classList.contains('hide')) {
+                hideTabsContent(0);
+                tab[b].classList.add('whiteborder');
+                tabContent[b].classList.remove('hide');
+                tabContent[b].classList.add('show');
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // SELECT MENU
+            $("#novoMenu a").click(function () {
+
+                var value = $(this).text();
+                value = $(this).attr('id');
+
+                //IFRAME TAG
+
+                $("#myIframe").attr('src', value);
+            })
+            // SELECT MENU
+            $("#novoMenu2 a").click(function () {
+
+                var value = $(this).text();
+                value = $(this).attr('src');
+
+                //IFRAME TAG
+                if (value) {
+
+                    $("#myIframe").attr('src', value);
+                    $('.menuLateral').removeClass('mostra');
+                    $('.menusecundario').removeClass('mostra');
+                    $('.diviFrame').removeClass('mostra');
 
 
+                }
+
+            })
+
+            // SELECT MENU
+            $("#menuCadastros a").click(function () {
+
+                var value = $(this).text();
+                value = $(this).attr('id');
+
+                //IFRAME TAG
+                if (value != '') {
+                    $("#myIframe").attr('src', value);
+                }
+
+            })
 
 
-</div>
-
+        });
+    </script>
 </body>
 
 </html>
