@@ -52,7 +52,7 @@ $url = (parse_url($URL_ATUAL, PHP_URL_PATH));
                         <?php if ($url == URLROOT . "/crediario/") {
                             echo " active ";
                         } ?>">
-                            Crediario</a>
+                            Crediário</a>
                     </li>
                 <?php }
 
